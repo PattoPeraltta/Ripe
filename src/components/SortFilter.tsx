@@ -22,9 +22,9 @@ export const SortFilter = (): JSX.Element => {
   );
 
   return (
-    <div className="mb-2 flex flex-1 gap-2 ">
+    <div className="mb-6 flex flex-1 gap-2">
       <SearchInput
-        className="w-full rounded-full"
+        className="w-full rounded-full text-[#B6CDEC] "
         placeholder="Search proposals names..."
         value={search}
         onChange={onChange}

@@ -76,7 +76,7 @@ const ConnectedDetails = ({
 
   return (
     <div>
-      <div className="flex gap-2 text-white">
+      <div className="flex gap-2 text-[#222133]">
         {!isEligibleToVote && <Chip>You are not allowed to vote</Chip>}
 
         {isEligibleToVote && !isRegistered && (

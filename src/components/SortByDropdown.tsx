@@ -32,14 +32,14 @@ const RadioItem = ({ value = "", label = "" }: IRadioItemProps): JSX.Element => 
 export const SortByDropdown = ({ value, onChange, options = [] }: ISortByDropdownProps): JSX.Element => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
-      <IconButton aria-label="Sort by" className="w-48 justify-start" icon={ArrowUpDown} variant="outline">
+      <IconButton aria-label="Sort by" className="w-48 justify-start border-[#222133]" icon={ArrowUpDown} variant="outline">
         Sort by: {sortLabels[value]}
       </IconButton>
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
       <DropdownMenu.Content
-        className="z-50 w-[200px] rounded-xl border border-gray-300 bg-white p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+        className="z-50 w-[200px] rounded-xl border bg-white p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
         sideOffset={5}
       >
         <DropdownMenu.Label className="dark:gray-500 p-2 text-xs font-semibold uppercase text-gray-700">

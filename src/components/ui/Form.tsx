@@ -112,7 +112,7 @@ export const SearchInput = forwardRef(({ ...props }: ComponentPropsWithRef<typeo
       <Search />
     </InputIcon>
 
-    <Input ref={ref} {...props} className="rounded-full pl-10 text-[#B6CDEC]" />
+    <Input ref={ref} {...props} className="rounded-full pl-14 text-[#B6CDEC] placeholder-[#B6CDEC]" />
   </InputWrapper>
 ));
 
