@@ -1,11 +1,7 @@
-import { Heading } from "~/components/ui/Heading";
-
 export const InvalidAdmin = (): JSX.Element => (
-  <div>
-    <Heading as="h3" size="2xl">
-      Invalid Admin Account
-    </Heading>
+  <div className="flex h-[200px] flex-col items-center justify-center">
+    <div className="mb-4 text-2xl text-[#222133]">Hey hey hey... you are not an admin!</div>
 
-    <p>Only admins can access this page.</p>
+    <div className="text-lg text-[#222133]">Only admins can access this page :(</div>
   </div>
 );
