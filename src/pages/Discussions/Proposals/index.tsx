@@ -24,23 +24,4 @@ const ProjectsPage = (): JSX.Element => (
     <Projects />
   </div>
 );
-// const appState = useAppState();
-
-// return (
-//   <LayoutWithBallot eligibilityCheck showBallot sidebar="left">
-//     <div className="flex flex-col items-start gap-2 pt-8 ">
-//       <BallotHeader>Voting has not started yet</BallotHeader>
-
-//       {appState === EAppState.REVIEWING ? (
-//         <BallotSection title="Applications are being reviewed" />
-//       ) : (
-//         <Button as={Link} className="border-1 mt-3 w-full text-[#b6cdec]" href="/applications/new">
-//           Create proposal
-//         </Button>
-//       )}
-//     </div>
-
-//     <Projects />
-//   </LayoutWithBallot>
-// );
 export default ProjectsPage;

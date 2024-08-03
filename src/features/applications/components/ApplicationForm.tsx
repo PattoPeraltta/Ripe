@@ -1,4 +1,3 @@
-import { useController, useFormContext } from "react-hook-form";
 import { useLocalStorage } from "react-use";
 import { toast } from "sonner";
 import { useAccount } from "wagmi";
@@ -7,24 +6,12 @@ import { z } from "zod";
 import { ImageUpload } from "~/components/ImageUpload";
 import { Alert } from "~/components/ui/Alert";
 import { IconButton } from "~/components/ui/Button";
-import {
-  ErrorMessage,
-  FieldArray,
-  Form,
-  FormControl,
-  FormSection,
-  Input,
-  Label,
-  Select,
-  Textarea,
-} from "~/components/ui/Form";
+import { Form, FormControl, FormSection, Input, Textarea } from "~/components/ui/Form";
 import { Spinner } from "~/components/ui/Spinner";
-import { Tag } from "~/components/ui/Tag";
-import { impactCategories } from "~/config";
 import { useIsCorrectNetwork } from "~/hooks/useIsCorrectNetwork";
 
 import { useCreateApplication } from "../hooks/useCreateApplication";
-import { ApplicationSchema, ProfileSchema, contributionTypes, fundingSourceTypes } from "../types";
+import { ApplicationSchema, ProfileSchema } from "../types";
 
 const ApplicationCreateSchema = z.object({
   profile: ProfileSchema,
@@ -34,48 +21,6 @@ const ApplicationCreateSchema = z.object({
 export interface IApplicationFormProps {
   address?: string;
 }
-
-const ImpactTags = (): JSX.Element => {
-  const { control, watch, formState } = useFormContext<z.infer<typeof ApplicationCreateSchema>>();
-  const { field } = useController({
-    name: "application.impactCategory",
-    control,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  const selected = watch("application.impactCategory") ?? [];
-
-  const error = formState.errors.application?.impactCategory;
-  return (
-    <div className="mb-4">
-      <Label>
-        Impact categories<span className="text-red-300">*</span>
-      </Label>
-
-      <div className="flex flex-wrap gap-2">
-        {Object.entries(impactCategories).map(([value, { label }]) => {
-          const isSelected = selected.includes(value);
-          return (
-            <Tag
-              key={value}
-              selected={isSelected}
-              size="lg"
-              onClick={() => {
-                const currentlySelected = isSelected ? selected.filter((s) => s !== value) : selected.concat(value);
-
-                field.onChange(currentlySelected);
-              }}
-            >
-              {label}
-            </Tag>
-          );
-        })}
-      </div>
-
-      {error && <ErrorMessage>{error.message}</ErrorMessage>}
-    </div>
-  );
-};
 
 const CreateApplicationButton = ({ isLoading, buttonText }: { isLoading: boolean; buttonText: string }) => {
   const { isCorrectNetwork, correctNetwork } = useIsCorrectNetwork();
@@ -105,22 +50,22 @@ const CreateApplicationButton = ({ isLoading, buttonText }: { isLoading: boolean
   );
 };
 
-export const ApplicationForm = ({ address = "" }: IApplicationFormProps): JSX.Element => {
+export const ApplicationForm = ({}: IApplicationFormProps): JSX.Element => {
   const clearDraft = useLocalStorage("application-draft")[2];
 
   const create = useCreateApplication({
     onSuccess: () => {
-      toast.success("Application created successfully!");
+      toast.success("Proposal created successfully!");
       clearDraft();
     },
     onError: (err: { reason?: string; data?: { message: string } }) =>
-      toast.error("Application create error", {
+      toast.error("Proposal create error", {
         description: err.reason ?? err.data?.message,
       }),
   });
   if (create.isSuccess) {
     return (
-      <Alert title="Application created!" variant="success">
+      <Alert title="Proposal created!" variant="success">
         It will now be reviewed by our admins.
       </Alert>
     );
@@ -133,11 +78,13 @@ export const ApplicationForm = ({ address = "" }: IApplicationFormProps): JSX.El
     <div>
       <Form
         defaultValues={{
+          profile: {
+            name: "",
+            profileImageUrl: "",
+            bannerImageUrl: "",
+          },
           application: {
-            payoutAddress: address,
-            contributionLinks: [{}],
-            impactMetrics: [{}],
-            fundingSources: [{}],
+            contributionDescription: "",
           },
         }}
         schema={ApplicationCreateSchema}
@@ -146,35 +93,36 @@ export const ApplicationForm = ({ address = "" }: IApplicationFormProps): JSX.El
         }}
       >
         <FormSection
-          description="Configure your proposal name and choose the icon and background for it."
-          title="Proposal"
+          description="Configure your profile name and choose your avatar and background for your proposal."
+          title="Profile"
         >
-          <div className="gap-4 md:flex">
+          <FormControl required label="Profile name" name="profile.name">
+            <Input placeholder="Your proposal" />
+          </FormControl>
+
+          <div className="mb-4 gap-4 md:flex">
             <FormControl required label="Project avatar" name="profile.profileImageUrl">
-              <ImageUpload className="h-48 w-48" />
+              <ImageUpload className="h-48 w-48 " />
             </FormControl>
+
             <FormControl required className="flex-1" label="Project background image" name="profile.bannerImageUrl">
               <ImageUpload className="h-48 " />
             </FormControl>
           </div>
-          <FormControl required label="Profile name" name="profile.name">
-            <Input placeholder="Proposal name" />
+        </FormSection>
+
+        <FormSection description="Describe the contribution and impact of your proposal." title="Proposal Description">
+          <FormControl required label="Contribution description" name="application.contributionDescription">
+            <Textarea placeholder="What will your proposal contribute to?" rows={4} />
           </FormControl>
         </FormSection>
-          <FormControl required label="Description" name="application.bio">
-            <Textarea placeholder="Project description" rows={4} />
-          </FormControl>
 
-          <div className=" md:flex">
-            <FormControl required className="flex-1" label="Website" name="application.websiteUrl">
-              <Input placeholder="https://" />
-            </FormControl>
-          </div>
         {error ? (
           <div className="mb-4 text-center text-gray-600 dark:text-gray-400">
             Make sure you&apos;re not connected to a VPN since this can cause problems with the RPC and your wallet.
           </div>
         ) : null}
+
         <CreateApplicationButton
           buttonText={create.isUploading ? "Uploading metadata" : text}
           isLoading={create.isPending}

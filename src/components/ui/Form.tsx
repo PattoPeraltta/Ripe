@@ -28,7 +28,7 @@ import { IconButton } from "./Button";
 import { createComponent } from ".";
 
 const inputBase = [
-  "dark:bg-gray-900",
+  "dark:bg-[#222133]",
   "dark:text-[#b6cdec]",
   "dark:border-gray-700",
   "rounded",
@@ -224,7 +224,7 @@ export const FormSection = ({
   children,
 }: { title: string; description: string } & ComponentProps<"section">): JSX.Element => (
   <section className="mb-8">
-    <h3 className="mb-1 text-3xl font-semibold">{title}</h3>
+    <h3 className="mb-1 text-3xl font-semibold text-[#222133]">{title}</h3>
 
     <p className="mb-4 leading-loose text-[#222133] dark:text-[#222133]">{description}</p>
 

@@ -8,7 +8,7 @@ import { useAppState } from "~/utils/state";
 import { EAppState } from "~/utils/types";
 
 const APPLICATION_TEXT = `
-Fill out this form to create a proposal for discusion {enter discussion name}.
+Fill out this form to create a new proposal.
 Your progress is saved locally so you can return to this page to resume your proposal.
 `;
 
