@@ -2,9 +2,9 @@ import type { ChainConfig } from "@synthetixio/synpress/commands/metamask";
 
 export const NETWORKS: Record<string, ChainConfig> = {
   optimismSepolia: {
-    chainId: 11155420,
-    name: "OP Sepolia",
-    rpcUrl: `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID!}`,
+    chainId: 534351,
+    name: "Scroll Sepolia",
+    rpcUrl: `https://sepolia-rpc.scroll.io/${process.env.NEXT_PUBLIC_ALCHEMY_ID!}`,
     symbol: "ETH",
   },
 };
