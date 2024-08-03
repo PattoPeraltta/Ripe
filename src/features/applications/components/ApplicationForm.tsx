@@ -58,10 +58,12 @@ export const ApplicationForm = ({}: IApplicationFormProps): JSX.Element => {
       toast.success("Proposal created successfully!");
       clearDraft();
     },
-    onError: (err: { reason?: string; data?: { message: string } }) =>
+    onError: (err: { reason?: string; data?: { message: string } }) => {
+      console.log(err);
       toast.error("Proposal create error", {
         description: err.reason ?? err.data?.message,
-      }),
+      });
+    },
   });
   if (create.isSuccess) {
     return (
