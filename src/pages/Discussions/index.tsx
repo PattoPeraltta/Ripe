@@ -29,7 +29,7 @@ const Discussions = (): JSX.Element => (
 
         <a
           className="flex h-[200px] w-full items-center justify-center rounded-lg border-4 border-[#222133] bg-[#222133] p-6"
-          href="/new"
+          href="/Discussions/applications/new"
         >
           {/* This is when MACI starts */}
           <div className="text-2xl font-bold text-[#B6CDEC]">Create new discussion</div>

@@ -180,7 +180,7 @@ const BallotOverview = () => {
         {appState === EAppState.REVIEWING ? (
           <BallotSection title="Applications are being reviewed" />
         ) : (
-          <Button as={Link} className="border-1 mt-3 w-full text-[#b6cdec]" href="/applications/new">
+          <Button as={Link} className="border-1 mt-3 w-full text-[#b6cdec]" href="/Discussions/applications/new">
             Create proposal
           </Button>
         )}
