@@ -108,6 +108,8 @@ This novel integration of MACI with traditional organizational structures enhanc
 
 ## Contranct Addresses Deployed on Scroll Sepolia
 
+> We had an issue verifying the contracts on Scroll Sepolia cause the recaptcha did not allow us to fill the form. Anyways, some of the contracts are verified.
+
 - `ConstantInitialVoiceCreditProxy:` 0xC413538578345f60Db652Cd386622Bc80bDb929B
   Link to Scroll Sepolia: https://sepolia.scrollscan.dev/address/0xC413538578345f60Db652Cd386622Bc80bDb929B
 - `EASGatekeeper:` 0x858666eB9c78F8846Cab53e784867D9087f001ca
