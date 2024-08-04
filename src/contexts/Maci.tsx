@@ -24,12 +24,14 @@ export const MaciContext = createContext<MaciContextType | undefined>(undefined)
 
 export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProviderProps) => {
   const signer = useEthersSigner();
-  const { isConnected, isDisconnected } = useAccount();
+  // const { isConnected, isDisconnected } = useAccount();
+  const [isConnected, setIsConnected] = useState<boolean>(false);
   const [address, setAddress] = useState<string>();
   const account = useActiveAccount();
   useEffect(() => {
     if (account) {
       setAddress(account.address);
+      setIsConnected(true);
     }
   }, [account]);
 
@@ -47,6 +49,7 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
   const [signatureMessage, setSignatureMessage] = useState<string>("");
 
   const { signMessageAsync } = useSignMessage();
+
   const user = api.maci.user.useQuery(
     { publicKey: maciPubKey ?? "" },
     { enabled: Boolean(maciPubKey && config.maciSubgraphUrl) },
@@ -94,11 +97,15 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
     if (!address) {
       return;
     }
+    // const signature = await account!.signMessage({ message: `Generate MACI Key Pair at ${window.location.origin}` });
 
     const signature = await signMessageAsync({ message: signatureMessage });
+    // console.log("signature", signature);
     const userKeyPair = genKeyPair({ seed: BigInt(signature) });
+    // console.log("userKeyPair", userKeyPair);
     localStorage.setItem("maciPrivKey", userKeyPair.privateKey);
     localStorage.setItem("maciPubKey", userKeyPair.publicKey);
+    // console.log("userKeyPair", userKeyPair);
     setMaciPrivKey(userKeyPair.privateKey);
     setMaciPubKey(userKeyPair.publicKey);
   }, [address, signatureMessage, signMessageAsync, setMaciPrivKey, setMaciPubKey]);
@@ -111,6 +118,10 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
   const onSignup = useCallback(
     async (onError: () => void) => {
       if (!signer || !maciPubKey || !attestationId) {
+        console.log("signer", signer);
+        console.log("maciPubKey", maciPubKey);
+        console.log("attestationId", attestationId);
+
         return;
       }
 
@@ -181,13 +192,13 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
   );
 
   useEffect(() => {
-    if (!address) {
+    if (!isConnected) {
       setMaciPrivKey(undefined);
       setMaciPubKey(undefined);
       localStorage.removeItem("maciPrivKey");
       localStorage.removeItem("maciPubKey");
     }
-  }, [address]);
+  }, [isConnected]);
 
   useEffect(() => {
     generateKeypair().catch(console.error);
@@ -203,7 +214,7 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
 
   /// check if the user already registered
   useEffect(() => {
-    if (!signer || !maciPubKey || !address || isLoading) {
+    if (!isConnected || !signer || !maciPubKey || !address || isLoading) {
       return;
     }
 
@@ -231,7 +242,7 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
     }
   }, [
     isLoading,
-    address ? true : false,
+    isConnected,
     isRegistered,
     maciPubKey,
     address,

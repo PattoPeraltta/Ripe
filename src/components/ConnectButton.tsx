@@ -1,7 +1,9 @@
+// entiendo que la attestation itself se almacena en EAS platform. Esto lo hace a traves de fetchAttestations hay un filtro que es voter, asumo q eeson o esta fuc.
+
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { type ComponentPropsWithRef, useCallback } from "react";
+import { type ComponentPropsWithRef, useCallback, useEffect, useState } from "react";
 import { FaListCheck } from "react-icons/fa6";
 import { createBreakpoint } from "react-use";
 import { toast } from "sonner";
@@ -16,9 +18,11 @@ import type { Address } from "viem";
 
 import { Button } from "./ui/Button";
 import { Chip } from "./ui/Chip";
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { createThirdwebClient } from "thirdweb";
 import { createWallet, inAppWallet, Wallet, walletConnect } from "thirdweb/wallets";
+import { api } from "~/utils/api";
+import { useApproveVoters } from "~/features/voters/hooks/useApproveVoters";
 
 const useBreakpoint = createBreakpoint({ XL: 1280, L: 768, S: 350 });
 
@@ -97,10 +101,6 @@ const ConnectedDetails = ({
             </div>
           </Chip>
         )}
-
-        <UserInfo address={account.address as Address} onClick={openAccountModal}>
-          {isMobile ? null : account.displayName}
-        </UserInfo>
       </div>
     </div>
   );
@@ -150,7 +150,13 @@ async function registerUser(userAddress: String) {
 export const Component = (): JSX.Element => {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "S";
-  const { isLoading, isRegistered, isEligibleToVote, onSignup } = useMaci();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
 
   function handleConnect(wallet: Wallet) {
     console.log("Connected wallet", wallet);
@@ -178,6 +184,7 @@ export const Component = (): JSX.Element => {
       const domainRegex = /^[a-zA-Z0-9._%+-]+@alu.ing.unlp.edu.ar$/;
       if (domainRegex.test(payload.storedToken.authDetails.email)) {
         console.log("Domain is valid");
+        toast.success("Domain verified");
       } else {
         console.log("Domain is invalid");
         return;
@@ -188,9 +195,12 @@ export const Component = (): JSX.Element => {
     // console.log("User registered", res);
   }
   return (
-    <div>
-      {!isEligibleToVote && <Chip>You are not allowed to vote</Chip>}
-
+    <div className="flex items-center gap-3">
+      <ConnectedDetails
+        account={{ address: address, displayName: "John Doe" }}
+        isMobile={isMobile}
+        openAccountModal={() => {}}
+      />
       <ConnectButton
         client={client}
         wallets={wallets}
