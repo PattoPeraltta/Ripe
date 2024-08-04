@@ -71,10 +71,9 @@ graph LR
 
 ## Credits 
 
-We used MACI-RPGF as a start ground for us. 
-
-Special thanks to Sam Richards and Cris Garner for the help in implementing MACI <3 
-
+We used MACI-RPGF as a starting point for our project.
+Special thanks to Sam Richards and Cris Garner for their invaluable help in implementing MACI <3
+And to Fede Viarnés and Goncy for being the best mentors!
 
 
 
