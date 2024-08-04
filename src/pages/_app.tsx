@@ -20,7 +20,7 @@ const navLinks = [
     children: "Organizations",
   },
   {
-    href: "/Discussions/info",
+    href: "/info",
     children: "Current Voting",
   },
 ];
