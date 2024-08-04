@@ -7,9 +7,9 @@ import { AdminLayout } from "~/layouts/AdminLayout";
 
 const VotersPage = (): JSX.Element => (
   <AdminLayout title="Manage voters">
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between text-[#222133]">
       <Heading as="h1" size="3xl">
-        Approved voters
+        Members of the organization
       </Heading>
 
       <ApproveVoters />

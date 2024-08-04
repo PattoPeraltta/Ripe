@@ -63,7 +63,7 @@ const ClearBallot = () => {
 const EmptyBallot = () => (
   <div className="flex flex-1 items-center justify-center">
     <div className=" max-w-[360px] space-y-4">
-      <h3 className="text-center text-lg font-bold">Your vote is empty</h3>
+      <h3 className="text-center text-lg font-bold text-[#222133]">Your vote is empty</h3>
 
       <p className="text-center text-sm text-gray-700">
         Your vote currently doesn&apos;t have any projects added. Browse through the available projects.
@@ -94,9 +94,9 @@ const BallotAllocationForm = () => {
 
   return (
     <div>
-      <h1 className="mb-2 text-2xl font-bold">Review your vote</h1>
+      <h1 className="mb-2 text-2xl font-bold text-[#222133]">Review your vote</h1>
 
-      <p className="mb-6">Once you have reviewed your votes allocation, you can submit your vote.</p>
+      <p className="mb-6 text-[#222133]">Once you have reviewed your votes allocation, you can submit your vote.</p>
 
       <div className="mb-2 justify-between sm:flex">{ballot?.votes.length ? <ClearBallot /> : null}</div>
 
@@ -111,7 +111,7 @@ const BallotAllocationForm = () => {
           </div>
         </div>
 
-        <div className="flex h-16 items-center justify-between rounded-b-2xl border-t border-gray-300 px-8 py-4 text-lg font-semibold dark:border-gray-800">
+        <div className="flex h-16 items-center justify-between rounded-b-2xl border-t border-gray-300 px-8 py-4 text-lg font-semibold text-[#222133] dark:border-gray-800">
           <div>Total votes</div>
 
           <div className="flex items-center gap-2">
