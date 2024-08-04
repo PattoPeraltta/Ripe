@@ -45,6 +45,7 @@ graph LR
     style I fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
 
 ```
+
 ## Technologies Used
 
 - Minimal Anti-Collusion Infrastructure (MACI): MACI is the core protocol that secures the voting process. It employs cryptographic techniques, smart contracts, and zero-knowledge proofs to maintain voter privacy and ensure that votes are resistant to manipulation or external pressure.
@@ -68,6 +69,21 @@ graph LR
         <img src="/readme/pato.png" alt="Alt Text 3" width="100" height="100">
     </a>
 </p>
+
+## Why Ripe is a Great Use of MACI
+
+Ripe embodies the ideal use case for MACI by addressing critical challenges in secure, anonymous voting within organizations. Our platform is integrated, from frontend to backend, and deployed on Scroll Sepolia, ensuring that it is both functional and accessible.
+
+#### Solving a Significant Problem
+By leveraging MACI, Ripe provides a robust solution that ensures votes remain anonymous and secure, addressing a significant need in both decentralized and traditional voting contexts. Meanwhile, it tries to achieve a friendly UX.
+
+#### Full Integration and Functionality
+Our platform is a proof of concept, that aims to be fully functional platform that integrates MACI seamlessly across both the frontend and backend in the short-term. The entire voting workflow—from creating organizations and discussions to inviting participants and casting votes—has been meticulously designed, and the voting has been implemented.
+
+#### Innovative Use of Technology
+Ripe brings innovation to the table with its email domain verification feature, which leverages institutional affiliation as a gatekeeper within the voting protocol. This functionality allows organizations to restrict voting access to specific email domains, ensuring that only verified members of an institution can participate in the voting process.
+
+This feature not only adds an additional layer of security but also introduces a novel way of integrating MACI with existing organizational structures -traditional ones-. By using email verification as a gatekeeping mechanism, Ripe enhances the trustworthiness and relevance of the voting process, ensuring that the right stakeholders are involved in decision-making. This approach can be extended to serve as a broader gatekeeping tool in the protocol, controlling access to sensitive voting and governance decisions based on institutional affiliation or other criteria.
 
 ## Credits 
 
