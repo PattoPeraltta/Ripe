@@ -1,9 +1,0 @@
-[default.extend-words]
-ba = "ba"
-serie = "serie"
-groth = "groth"
-Allo = "Allo"
-Buidl = "Buidl"
-
-[files]
-extend-exclude = ["/**/CHANGELOG.md", "/**/*.svg", "/**/*.excalidraw"]
