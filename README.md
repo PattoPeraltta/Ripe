@@ -1,87 +1,81 @@
-# MACI-RPGF
+![Ripe Slogan](readme/ripe.png)
 
-<div>
-<a href="https://maci-rpgf.vercel.app/">View demo</a>
-<span>|</span>
-<a href="https://discord.com/invite/sF5CT5rzrR">Discord (#🗳️-maci channel)</a>
-<span>|</span>
-<a href="https://www.youtube.com/watch?v=86VBbO1E4Vk">Video Tutorial</a>
-</div>
+Ripe is the tool to empower your organization with seamless, anonymous, and secure voting on critical decisions. Our platform leverages MACI (Minimal Anti-Collusion Infrastructure) from PSE Team to protect voter privacy and ensure tamper-proof results, all within a user-friendly environment where discussions and proposals come to life.
 
-[<img src="./docs/images/screenshot.png"/>](https://easy-retro-pgf.vercel.app)
+## Workflow
+As a user, you can create and manage multiple organizations, each with its own discussions. Within these discussions, you can invite specific participants with an authorized email domain to vote on different proposals. The voting is conducted anonymously and securely using MACI, which protects both the integrity of the vote and the identity of the voter.
 
-## Documentation
+## The MVP
+For the MVP, we've successfully developed the core voting workflow. The features for creating organizations and initiating new discussions are planned for version 1.5. After all, 36 hours isn’t a lot of time!
 
-MACI-RPGF uses EAS as backbone to run Retroactive Public Goods Funding to reward contributors ([As used by the Optimism Collective](https://community.optimism.io/docs/governance/citizens-house/#how-retro-funding-works)) while adding a privacy layer to reduce bribery and collusion using MACI.
+## Key Features
+- Organizations: Create and manage organizations to handle discussions and voting.
+- 
+- Discussions: Within each organization, you can create discussions where proposals are presented for voting.
+- Participant Invitations: Invite participants with specific email domains to join discussions and vote.
+- Anonymous Voting: Voting is done using MACI, ensuring that the process is both anonymous and secure.
+- Identity Verification: We use JSON Web Signatures (JWS) through thirdweb to verify users' identities upon registration.
+- Autonomous Wallets: Implemented account abstraction to create wallets via atr-as, facilitating user participation.
+```mermaid
+graph LR
+    subgraph User Interaction
+        A[User] --> B[Identity Verification via thirdweb]
+        B --> C[Account Creation]
+    end
 
-## Video Tutorial
+    subgraph Organization Management
+        C --> D[Create and Manage Organizations]
+        D --> E[Start Discussions]
+        E --> F[Invite Participants with Specific Email Domains]
+    end
 
-A complete installation tutorial can be seen here:
+    subgraph Voting Process
+        F --> G[Vote on Proposals]
+        G --> H[MACI for Anonymous Voting]
+        H --> I[Protection of Vote Integrity and Voter Identity]
+    end
 
-[![Watch the Video](https://img.youtube.com/vi/86VBbO1E4Vk/0.jpg)](https://www.youtube.com/watch?v=86VBbO1E4Vk)
-
-### MACI-RPGF docs
-
-- [Setup & Deployment](./docs/01_setup.md)
-- [Adding Projects & Approving](./docs/02_adding_projects.md)
-- [Creating Badgeholders/Voters](./docs/03_creating_badgeholders.md)
-- [Voting](./docs/04_voting.md)
-- [Results](./docs/05_results.md)
-- [Troubleshooting of MACI](./docs/06_maci_troubleshooting.md)
-
-### MACI docs
-
-- [Documentation](https://maci.pse.dev/docs/introduction)
-
-## Supported Networks
-
-All networks EAS is deployed to are supported. If a network is not supported, you can follow the EAS documentation to deploy the contracts to the network.
-
-- https://docs.attest.sh/docs/quick--start/contracts
-
-#### Mainnets
-
-- Ethereum
-- Optimism
-- Base
-- Arbitrum One & Nova
-- Polygon
-- Scroll
-- Celo
-- Linea
-
-#### Testnets
-
-- Sepolia
-- Optimism Sepolia
-- Base Sepolia
-- Polygon Mumbai
-- Scroll Sepolia
-
-## Development
-
-To run locally follow these instructions:
-
-```sh
-git clone https://github.com/privacy-scaling-explorations/maci-rpgf
-
-cp .env.example .env # and update .env variables
+    style A fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style B fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style C fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style D fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style E fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style F fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style G fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style H fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
+    style I fill:#B6CDEC,stroke:#222133,stroke-width:2px,rx:15,ry:15,color:#222133
 
 ```
+## Technologies Used
 
-At the very minimum you need to configure the subgraph url, admin address, maci address and the voting periods. For more details head to [Setup & Deployment](./docs/01_setup.md). Once you have set everything run:
+- Minimal Anti-Collusion Infrastructure (MACI): MACI is the core protocol that secures the voting process. It employs cryptographic techniques, smart contracts, and zero-knowledge proofs to maintain voter privacy and ensure that votes are resistant to manipulation or external pressure.
 
-```sh
-pnpm install
+- Ethereum Attestation Service (EAS): These attestations verify and validate actions within the ecosystem, ensuring the integrity and transparency of the voting process.
 
-pnpm run dev
+- Account Abstraction via thirdweb: We use thirdweb for account abstraction, simplifying wallet management and ensuring a seamless user experience. So your aunt Lilly can vote with her co-workers where the budget goes!
 
-open localhost:3000
-```
+- Deployment on Scroll Sepolia: The platform is deployed on Scroll Sepolia.
 
-### Technical details
+## Team
 
-- **EAS** - Projects, profiles, etc are all stored on-chain in Ethereum Attestation Service
-- **Batched requests with tRPC** - Multiple requests are batched into one (for example when the frontend requests the metadata for 24 projects they are batched into 1 request)
-- **Server-side caching of requests to EAS and IPFS** - Immediately returns the data without calling EAS and locally serving ipfs cids.
-- **MACI** - Minimal Anti-Collusion Infrastructure (MACI) is an open-source public good that serves as infrastructure for private on-chain voting, handles the rounds and private voting of the badgeholders.
+<p align="center">
+    <a href="readme/santi.png">
+        <img src="https://x.com/santi_nihany" alt="Alt Text 2" width="100" height="100">
+    </a>
+     <a href="https://x.com/luzalbaposse">
+        <img src="/readme/luz.png" alt="Alt Text 1" width="100" height="100">
+    </a>
+    <a href="readme/pato.png">
+        <img src="https://x.com/PatojPeralta" alt="Alt Text 3" width="100" height="100">
+    </a>
+</p>
+
+## Credits 
+
+We used MACI-RPGF as a start ground for us. 
+
+Special thanks to Sam Richards and Cris Garner for the help in implementing MACI <3 
+
+
+
+
