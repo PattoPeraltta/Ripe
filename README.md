@@ -125,7 +125,48 @@ This novel integration of MACI with traditional organizational structures enhanc
 - `MessageProcessor-poll-0: `0x89CB9Cfe54BE6bC423F219898014E98F11BFEc2d
 - `Tally-poll-0:` 0x961C767eF2032F156A54185400193360C78E5DeF
 - `AccQueueQuinaryMaci-poll-0:` 0x68d0C93a7b78bBd1CDc66bF4896Ac98780Bbe14f
-  
+
+## Installation
+
+1. Clone this repo using `git clone https://github.com/PattoPeraltta/Ripe`
+2. Install MACI
+```bash
+git clone https://github.com/privacy-scaling-explorations/maci.git && \
+cd maci && \
+git checkout v1.2.4 && \
+pnpm i && \
+pnpm run build
+```
+3. Download .zkey files
+```
+pnpm download:test-zkeys
+```
+4. Set `.env`
+```
+MNEMONIC="your_ethereum_secret_key"
+ETH_PROVIDER="the_eth_provider_url"
+ETHERSCAN_API_KEY="etherscan api key"
+```
+5. Generate MACI Keys
+```
+cd cli && \
+node build/ts/index.js genMaciKeyPair
+```
+
+6. Deploy MACI Contracts
+
+Run `pnpm deploy` to deploy the contracts 
+
+```bash
+pnpm deploy:scroll-sepolia
+```
+
+7. App run
+   ```bash
+   pnpm install
+   pnpm dev
+   ```
+   
 ## Credits 
 
 We built our project on the foundation of **MACI-RPGF**, using it as our starting point. We extend our heartfelt thanks to Sam Richards and Cris Garner for their invaluable assistance in implementing MACI. Special appreciation also goes to Fede Viarnés and Goncy for being exceptional mentors throughout this hackathon --and in life--!
