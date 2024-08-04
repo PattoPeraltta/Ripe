@@ -1,0 +1,33 @@
+type DeployPoll @entity(immutable: true) {
+  id: Bytes!
+  _pollId: BigInt! # uint256
+  _coordinatorPubKeyX: BigInt! # uint256
+  _coordinatorPubKeyY: BigInt! # uint256
+  pollAddr_poll: Bytes! # address
+  pollAddr_messageProcessor: Bytes! # address
+  pollAddr_tally: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SignUp @entity(immutable: true) {
+  id: Bytes!
+  _stateIndex: BigInt! # uint256
+  _userPubKeyX: BigInt! # uint256
+  _userPubKeyY: BigInt! # uint256
+  _voiceCreditBalance: BigInt! # uint256
+  _timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

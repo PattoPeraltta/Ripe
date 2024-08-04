@@ -1,4 +1,5 @@
 import { useAccount } from "wagmi";
+import { useActiveAccount } from "thirdweb/react";
 
 import { Alert } from "~/components/ui/Alert";
 import { Markdown } from "~/components/ui/Markdown";
@@ -6,14 +7,23 @@ import { ApplicationForm } from "~/features/applications/components/ApplicationF
 import { Layout } from "~/layouts/DefaultLayout";
 import { useAppState } from "~/utils/state";
 import { EAppState } from "~/utils/types";
+import { useEffect, useState } from "react";
 
 const APPLICATION_TEXT = `
-Fill out this form to create a new proposal.
+Fill out this form to create a proposal for discusion {enter discussion name}.
 Your progress is saved locally so you can return to this page to resume your proposal.
 `;
 
 const NewProjectPage = (): JSX.Element => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const [address, setAddress] = useState<string>("");
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account?.address);
+    }
+  }, [account]);
+
   const state = useAppState();
 
   return (

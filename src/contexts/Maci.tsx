@@ -9,7 +9,7 @@ import {
   getPoll,
   genKeyPair,
 } from "maci-cli/sdk";
-import React, { createContext, useContext, useCallback, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useCallback, useEffect, useMemo, useState, use } from "react";
 import { useAccount, useSignMessage } from "wagmi";
 
 import { config } from "~/config";
@@ -18,12 +18,20 @@ import { api } from "~/utils/api";
 
 import type { IVoteArgs, MaciContextType, MaciProviderProps } from "./types";
 import type { Attestation } from "~/utils/fetchAttestations";
+import { useActiveAccount } from "thirdweb/react";
 
 export const MaciContext = createContext<MaciContextType | undefined>(undefined);
 
 export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProviderProps) => {
   const signer = useEthersSigner();
-  const { address, isConnected, isDisconnected } = useAccount();
+  const { isConnected, isDisconnected } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
 
   const [isRegistered, setIsRegistered] = useState<boolean>();
   const [stateIndex, setStateIndex] = useState<string>();
@@ -173,13 +181,13 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
   );
 
   useEffect(() => {
-    if (isDisconnected) {
+    if (!address) {
       setMaciPrivKey(undefined);
       setMaciPubKey(undefined);
       localStorage.removeItem("maciPrivKey");
       localStorage.removeItem("maciPubKey");
     }
-  }, [isDisconnected]);
+  }, [address]);
 
   useEffect(() => {
     generateKeypair().catch(console.error);
@@ -195,7 +203,7 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
 
   /// check if the user already registered
   useEffect(() => {
-    if (!isConnected || !signer || !maciPubKey || !address || isLoading) {
+    if (!signer || !maciPubKey || !address || isLoading) {
       return;
     }
 
@@ -223,7 +231,7 @@ export const MaciProvider: React.FC<MaciProviderProps> = ({ children }: MaciProv
     }
   }, [
     isLoading,
-    isConnected,
+    address ? true : false,
     isRegistered,
     maciPubKey,
     address,

@@ -5,6 +5,7 @@ import { config } from "~/config";
 
 import type { BallotContextType, BallotProviderProps } from "./types";
 import type { Ballot, Vote } from "~/features/ballot/types";
+import { useActiveAccount } from "thirdweb/react";
 
 export const BallotContext = createContext<BallotContextType | undefined>(undefined);
 
@@ -13,7 +14,14 @@ const defaultBallot = { votes: [], published: false };
 export const BallotProvider: React.FC<BallotProviderProps> = ({ children }: BallotProviderProps) => {
   const [ballot, setBallot] = useState<Ballot>(defaultBallot);
 
-  const { isDisconnected } = useAccount();
+  const [isDisconnected, setIsDisconnected] = useState<boolean | undefined>();
+  // const { isDisconnected } = useAccount();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (!account) {
+      setIsDisconnected(true);
+    }
+  }, [account]);
 
   // when summing the ballot we take the individual vote and square it
   // if the mode is quadratic voting, otherwise we just add the amount

@@ -2,6 +2,7 @@ import { type Chain, getDefaultConfig, RainbowKitProvider } from "@rainbow-me/ra
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { useMemo, type PropsWithChildren } from "react";
+import { ThirdwebProvider } from "thirdweb/react";
 import { http, WagmiProvider } from "wagmi";
 
 import { Toaster } from "~/components/Toaster";
@@ -14,17 +15,19 @@ export const Providers = ({ children }: PropsWithChildren): JSX.Element => {
 
   return (
     <ThemeProvider attribute="class" forcedTheme={appConfig.theme.colorMode}>
-      <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider>
-            <MaciProvider>
-              <BallotProvider>{children}</BallotProvider>
+      <ThirdwebProvider>
+        <WagmiProvider config={config}>
+          <QueryClientProvider client={queryClient}>
+            <RainbowKitProvider>
+              <MaciProvider>
+                <BallotProvider>{children}</BallotProvider>
 
-              <Toaster />
-            </MaciProvider>
-          </RainbowKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
+                <Toaster />
+              </MaciProvider>
+            </RainbowKitProvider>
+          </QueryClientProvider>
+        </WagmiProvider>
+      </ThirdwebProvider>
     </ThemeProvider>
   );
 };

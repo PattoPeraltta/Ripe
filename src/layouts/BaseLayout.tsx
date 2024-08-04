@@ -2,10 +2,11 @@ import clsx from "clsx";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { type ReactNode, type PropsWithChildren, createContext, useContext, useEffect, useMemo } from "react";
+import { type ReactNode, type PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useAccount } from "wagmi";
 
 import { metadata } from "~/config";
+import { useActiveAccount } from "thirdweb/react";
 
 const Context = createContext({ eligibilityCheck: false, showBallot: false });
 
@@ -47,13 +48,20 @@ export const BaseLayout = ({
 >): JSX.Element => {
   const { theme } = useTheme();
   const router = useRouter();
-  const { address, isConnecting } = useAccount();
+  // const { address, isConnecting } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
 
   useEffect(() => {
-    if (requireAuth && !address && !isConnecting) {
+    if (requireAuth && !address) {
       router.push("/");
     }
-  }, [requireAuth, address, isConnecting, router]);
+  }, [requireAuth, address, router]);
 
   const wrappedSidebar = <Sidebar side={sidebar}>{sidebarComponent}</Sidebar>;
 
@@ -107,7 +115,6 @@ export const BaseLayout = ({
 
           {sidebar === "right" ? wrappedSidebar : null}
         </div>
-
       </div>
     </Context.Provider>
   );

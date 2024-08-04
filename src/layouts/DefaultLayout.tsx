@@ -5,9 +5,10 @@ import BallotOverview from "~/features/ballot/components/BallotOverview";
 import { useAppState } from "~/utils/state";
 import { EAppState } from "~/utils/types";
 
-import type { ReactNode, PropsWithChildren } from "react";
+import { type ReactNode, type PropsWithChildren, useState, useEffect } from "react";
 
 import { type LayoutProps } from "./BaseLayout";
+import { useActiveAccount } from "thirdweb/react";
 
 type Props = PropsWithChildren<
   {
@@ -17,7 +18,14 @@ type Props = PropsWithChildren<
 >;
 
 export const Layout = ({ children = null, ...props }: Props): JSX.Element => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const [address, setAddress] = useState<string>("");
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
   const appState = useAppState();
 
   const navLinks = [

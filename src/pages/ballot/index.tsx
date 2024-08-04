@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
+import { useActiveAccount } from "thirdweb/react";
 import { useAccount } from "wagmi";
 
 import { Button } from "~/components/ui/Button";
@@ -124,16 +125,23 @@ const BallotAllocationForm = () => {
 };
 
 const BallotPage = (): JSX.Element => {
-  const { address, isConnecting } = useAccount();
+  // const { address, isConnecting } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
   const { ballot } = useBallot();
   const router = useRouter();
 
   useEffect(() => {
-    if (!address && !isConnecting) {
+    if (!address) {
       // eslint-disable-next-line no-console
       router.push("/").catch(console.error);
     }
-  }, [address, isConnecting, router]);
+  }, [address, router]);
 
   const votes = useMemo(() => ballot?.votes.sort((a, b) => b.amount - a.amount), [ballot]);
 

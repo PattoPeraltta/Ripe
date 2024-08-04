@@ -1,4 +1,4 @@
-import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { type ComponentPropsWithRef, useCallback } from "react";
@@ -16,6 +16,9 @@ import type { Address } from "viem";
 
 import { Button } from "./ui/Button";
 import { Chip } from "./ui/Chip";
+import { ConnectButton } from "thirdweb/react";
+import { createThirdwebClient } from "thirdweb";
+import { createWallet, inAppWallet, Wallet, walletConnect } from "thirdweb/wallets";
 
 const useBreakpoint = createBreakpoint({ XL: 1280, L: 768, S: 350 });
 
@@ -103,51 +106,104 @@ const ConnectedDetails = ({
   );
 };
 
-export const ConnectButton = (): JSX.Element => {
+const client = createThirdwebClient({
+  clientId: "989b407de9ce25994a3ba556785c54f6",
+});
+
+const wallets = [
+  createWallet("io.metamask"),
+  createWallet("com.coinbase.wallet"),
+  walletConnect(),
+  inAppWallet({
+    auth: {
+      options: ["email", "google", "apple", "facebook", "phone"],
+    },
+  }),
+];
+
+function decodeJWT(token: any) {
+  const base64Url = token.split(".")[1]; // Get the payload part
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(""),
+  );
+
+  return JSON.parse(jsonPayload);
+}
+
+async function registerUser(userAddress: String) {
+  const mint = await fetch("/api/auth", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userAddress: userAddress }),
+  }).then((res) => res.json());
+  return mint;
+}
+
+export const Component = (): JSX.Element => {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "S";
+  const { isLoading, isRegistered, isEligibleToVote, onSignup } = useMaci();
 
+  function handleConnect(wallet: Wallet) {
+    console.log("Connected wallet", wallet);
+    const account = wallet.getAccount();
+    console.log("Connected account", account);
+    if (!account) {
+      console.log("Account not found");
+      return;
+    }
+    const token = localStorage.getItem("walletToken-989b407de9ce25994a3ba556785c54f6");
+
+    if (!token) {
+      console.log("Token not found");
+      return;
+    }
+
+    const payload = decodeJWT(token);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const expiryTime = payload.exp;
+    if (currentTime > expiryTime) {
+      console.log("Token expired");
+      return;
+    } else {
+      console.log("Token is valid", payload.storedToken.authDetails.email);
+      const domainRegex = /^[a-zA-Z0-9._%+-]+@alu.ing.unlp.edu.ar$/;
+      if (domainRegex.test(payload.storedToken.authDetails.email)) {
+        console.log("Domain is valid");
+      } else {
+        console.log("Domain is invalid");
+        return;
+      }
+    }
+    console.log("User registered", account.address, payload.storedToken.jwtToken);
+    // const res = registerUser(account.address);
+    // console.log("User registered", res);
+  }
   return (
-    <RainbowConnectButton.Custom>
-      {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted, authenticationStatus }) => {
-        const ready = mounted && authenticationStatus !== "loading";
-        const connected =
-          ready && account && chain && (!authenticationStatus || authenticationStatus === "authenticated");
+    <div>
+      {!isEligibleToVote && <Chip>You are not allowed to vote</Chip>}
 
-        return (
-          <div
-            {...(!mounted && {
-              "aria-hidden": true,
-              style: {
-                opacity: 0,
-                pointerEvents: "none",
-                userSelect: "none",
-              },
-            })}
-          >
-            {(() => {
-              if (!connected) {
-                return (
-                  <Button
-                    suppressHydrationWarning
-                    className="rounded-full"
-                    variant="primary"
-                    onClick={openConnectModal}
-                  >
-                    {isMobile ? "Connect" : "Connect wallet"}
-                  </Button>
-                );
-              }
-
-              if (chain.unsupported ?? ![Number(config.network.id)].includes(chain.id)) {
-                return <Chip onClick={openChainModal}>Wrong network</Chip>;
-              }
-
-              return <ConnectedDetails account={account} isMobile={isMobile} openAccountModal={openAccountModal} />;
-            })()}
-          </div>
-        );
-      }}
-    </RainbowConnectButton.Custom>
+      <ConnectButton
+        client={client}
+        wallets={wallets}
+        theme={"dark"}
+        connectButton={{ label: "Connect" }}
+        connectModal={{
+          size: "wide",
+          title: "Ripe",
+          titleIcon: "",
+          showThirdwebBranding: false,
+        }}
+        onConnect={(wallet: Wallet) => handleConnect(wallet)}
+      />
+    </div>
   );
 };

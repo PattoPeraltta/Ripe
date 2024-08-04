@@ -1,9 +1,10 @@
 import { differenceInDays } from "date-fns";
 import dynamic from "next/dynamic";
-import { useMemo, type PropsWithChildren } from "react";
+import { useEffect, useMemo, useState, type PropsWithChildren } from "react";
+import { useActiveAccount } from "thirdweb/react";
 import { useAccount } from "wagmi";
 
-import { ConnectButton } from "~/components/ConnectButton";
+import { Component as ConnectButton } from "~/components/ConnectButton";
 import { Alert } from "~/components/ui/Alert";
 import { Heading } from "~/components/ui/Heading";
 import { config } from "~/config";
@@ -29,14 +30,22 @@ const Stats = () => {
   const results = useResults(pollData);
   const count = useProjectCount();
   const { data: projectsResults } = useProjectsResults(pollData);
-  const { isConnected } = useAccount();
+  // const { isConnected } = useAccount();
+
+  const [isConnected, setIsConnected] = useState<boolean | undefined>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setIsConnected(true);
+    }
+  }, [account]);
 
   const { averageVotes, projects = {} } = results.data ?? {};
 
   const chartData = useMemo(() => {
     const data = (projectsResults?.pages[0] ?? [])
       .map((project) => ({
-        x: project.name,
+        x: project.name_,
         y: projects[project.id]?.votes,
       }))
       .slice(0, 15);

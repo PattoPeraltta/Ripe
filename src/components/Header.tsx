@@ -8,7 +8,7 @@ import { type ComponentPropsWithRef, useState } from "react";
 
 import { config, metadata } from "~/config";
 
-import { ConnectButton } from "./ConnectButton";
+import { Component as ConnectButton } from "./ConnectButton";
 import { IconButton } from "./ui/Button";
 
 const Logo = () => (

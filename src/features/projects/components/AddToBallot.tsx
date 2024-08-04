@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { Check } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { useActiveAccount } from "thirdweb/react";
 import { useAccount } from "wagmi";
 import { z } from "zod";
 
@@ -89,7 +90,14 @@ const ProjectAllocation = ({
 };
 
 export const ProjectAddToBallot = ({ id = "", name = "" }: IProjectAddToBallotProps): JSX.Element | null => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
   const [isOpen, setOpen] = useState(false);
 
   const { isRegistered, isEligibleToVote, initialVoiceCredits, pollId } = useMaci();

@@ -4,9 +4,17 @@ import { metadata } from "~/config";
 import { useApprovedVoter } from "~/features/voters/hooks/useApprovedVoter";
 
 import { Dialog } from "./ui/Dialog";
+import { useEffect, useState } from "react";
+import { useActiveAccount } from "thirdweb/react";
 
 export const EligibilityDialog = (): JSX.Element | null => {
-  const { address } = useAccount();
+  const [address, setAddress] = useState<string>("");
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account?.address);
+    }
+  }, [account]);
   const { disconnect } = useDisconnect();
   const { data, isLoading, error } = useApprovedVoter(address!);
 

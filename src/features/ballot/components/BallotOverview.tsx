@@ -2,7 +2,7 @@ import clsx from "clsx";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { type PropsWithChildren, type ReactNode, useState, useCallback } from "react";
+import { type PropsWithChildren, type ReactNode, useState, useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { useAccount } from "wagmi";
 
@@ -20,6 +20,7 @@ import { useAppState } from "~/utils/state";
 import { EAppState } from "~/utils/types";
 
 import { VotingEndsIn } from "./VotingEndsIn";
+import { useActiveAccount } from "thirdweb/react";
 
 const BallotHeader = ({ children, ...props }: PropsWithChildren): JSX.Element => (
   <h3 className="text-sm font-semibold uppercase tracking-widest text-gray-700 dark:text-[#222133]" {...props}>
@@ -144,7 +145,14 @@ const BallotOverview = () => {
 
   const appState = useAppState();
 
-  const { address } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
+  console.log("address", address);
 
   if (appState === EAppState.LOADING) {
     return <Spinner className="h-6 w-6" />;
@@ -184,10 +192,6 @@ const BallotOverview = () => {
             Create proposal
           </Button>
         )}
-
-        <Button as={Link} className="border-1 mt-3 w-full text-[#b6cdec]" href="/applications">
-          Review applications
-        </Button>
       </div>
     );
   }

@@ -12,6 +12,8 @@ import { useIsCorrectNetwork } from "~/hooks/useIsCorrectNetwork";
 
 import { useCreateApplication } from "../hooks/useCreateApplication";
 import { ApplicationSchema, ProfileSchema } from "../types";
+import { useEffect, useState } from "react";
+import { useActiveAccount } from "thirdweb/react";
 
 const ApplicationCreateSchema = z.object({
   profile: ProfileSchema,
@@ -25,7 +27,14 @@ export interface IApplicationFormProps {
 const CreateApplicationButton = ({ isLoading, buttonText }: { isLoading: boolean; buttonText: string }) => {
   const { isCorrectNetwork, correctNetwork } = useIsCorrectNetwork();
 
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const [address, setAddress] = useState<string>("");
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account?.address);
+    }
+  }, [account]);
 
   return (
     <div className="flex items-center justify-between">

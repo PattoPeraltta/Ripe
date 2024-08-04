@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useActiveAccount } from "thirdweb/react";
 import { useAccount } from "wagmi";
 
 import { Alert } from "~/components/ui/Alert";
@@ -6,7 +8,13 @@ import { useApprovedVoter } from "~/features/voters/hooks/useApprovedVoter";
 import { Layout } from "~/layouts/DefaultLayout";
 
 const VotersPage = (): JSX.Element => {
-  const { address } = useAccount();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
   const approved = useApprovedVoter(address!);
 
   if (approved.isLoading) {

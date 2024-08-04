@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MACI
+    network: scroll-sepolia
+    source:
+      address: "0xf64B3fB7619f7855A4457c3bfbEEf663cA50aa7f"
+      abi: MACI
+      startBlock: 5937748
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DeployPoll
+        - OwnershipTransferred
+        - SignUp
+      abis:
+        - name: MACI
+          file: ./abis/MACI.json
+      eventHandlers:
+        - event: DeployPoll(uint256,indexed uint256,indexed uint256,(address,address,address))
+          handler: handleDeployPoll
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: SignUp(uint256,indexed uint256,indexed uint256,uint256,uint256)
+          handler: handleSignUp
+      file: ./src/maci.ts

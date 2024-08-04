@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useActiveAccount, useActiveWalletChain } from "thirdweb/react";
 import { useAccount, useChainId } from "wagmi";
 
 import { config } from "~/config";
@@ -8,10 +10,23 @@ export interface IUseIsCorrectNetworkReturn {
 }
 
 export function useIsCorrectNetwork(): IUseIsCorrectNetworkReturn {
-  const { isConnected } = useAccount();
-  const chainId = useChainId();
+  const [address, setAddress] = useState<string>();
+  const account = useActiveAccount();
+  useEffect(() => {
+    if (account) {
+      setAddress(account.address);
+    }
+  }, [account]);
 
-  const isCorrectNetwork = isConnected && chainId === config.network.id;
+  const [chainId, setChainId] = useState<number>();
+  const chain = useActiveWalletChain();
+  useEffect(() => {
+    if (chain) {
+      setChainId(chain.id);
+    }
+  }, [chain]);
+
+  const isCorrectNetwork = (account && chainId === config.network.id) || false;
 
   return {
     isCorrectNetwork,
