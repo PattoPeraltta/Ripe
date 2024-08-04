@@ -10,7 +10,6 @@ For the MVP, we've successfully developed the core voting workflow. The features
 
 ## Key Features
 - Organizations: Create and manage organizations to handle discussions and voting.
-- 
 - Discussions: Within each organization, you can create discussions where proposals are presented for voting.
 - Participant Invitations: Invite participants with specific email domains to join discussions and vote.
 - Anonymous Voting: Voting is done using MACI, ensuring that the process is both anonymous and secure.
