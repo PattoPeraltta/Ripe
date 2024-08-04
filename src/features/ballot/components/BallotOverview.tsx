@@ -184,6 +184,10 @@ const BallotOverview = () => {
             Create proposal
           </Button>
         )}
+
+        <Button as={Link} className="border-1 mt-3 w-full text-[#b6cdec]" href="/Discussions/applications">
+          Review applications
+        </Button>
       </div>
     );
   }

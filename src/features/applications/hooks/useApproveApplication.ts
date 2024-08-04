@@ -35,12 +35,15 @@ export function useApproveApplication(opts?: {
       return attest.mutateAsync(attestations.map((att) => ({ ...att, data: [att.data] })));
     },
     onSuccess: () => {
-      toast.success("Application approved successfully!");
+      toast.success("Proposal approved successfully!");
       opts?.onSuccess?.();
     },
-    onError: (err: { reason?: string; data?: { message: string } }) =>
-      toast.error("Application approve error", {
+
+    onError: (err: { reason?: string; data?: { message: string } }) => {
+      console.error("Error approving proposal:", err); // Log the full error object
+      toast.error("Proposal approve error", {
         description: err.reason ?? err.data?.message,
-      }),
+      });
+    },
   });
 }

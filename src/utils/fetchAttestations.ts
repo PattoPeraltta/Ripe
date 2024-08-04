@@ -19,7 +19,7 @@ export interface AttestationWithMetadata {
 }
 
 export type Attestation = Omit<AttestationWithMetadata, "decodedDataJson"> & {
-  name: string;
+  name_: string;
   metadataPtr: string;
 };
 

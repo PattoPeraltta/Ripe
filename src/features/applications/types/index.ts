@@ -9,6 +9,7 @@ export const ProfileSchema = z.object({
 export type Profile = z.infer<typeof ProfileSchema>;
 
 export const ApplicationSchema = z.object({
+  name: z.string().min(3),
   contributionDescription: z.string().min(3),
 });
 

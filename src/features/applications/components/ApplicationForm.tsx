@@ -59,7 +59,6 @@ export const ApplicationForm = ({}: IApplicationFormProps): JSX.Element => {
       clearDraft();
     },
     onError: (err: { reason?: string; data?: { message: string } }) => {
-      console.log(err);
       toast.error("Proposal create error", {
         description: err.reason ?? err.data?.message,
       });
@@ -86,6 +85,7 @@ export const ApplicationForm = ({}: IApplicationFormProps): JSX.Element => {
             bannerImageUrl: "",
           },
           application: {
+            name: "",
             contributionDescription: "",
           },
         }}
@@ -100,6 +100,10 @@ export const ApplicationForm = ({}: IApplicationFormProps): JSX.Element => {
         >
           <FormControl required label="Profile name" name="profile.name">
             <Input placeholder="Your proposal" />
+          </FormControl>
+
+          <FormControl required label="Application name" name="application.name">
+            <Input placeholder="Your proposal (app)" />
           </FormControl>
 
           <div className="mb-4 gap-4 md:flex">

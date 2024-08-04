@@ -5,11 +5,9 @@ import { useFormContext } from "react-hook-form";
 import { z } from "zod";
 
 import { EmptyState } from "~/components/EmptyState";
-import { Alert } from "~/components/ui/Alert";
 import { Badge } from "~/components/ui/Badge";
 import { Button } from "~/components/ui/Button";
 import { Checkbox, Form } from "~/components/ui/Form";
-import { Markdown } from "~/components/ui/Markdown";
 import { Skeleton } from "~/components/ui/Skeleton";
 import { Spinner } from "~/components/ui/Spinner";
 import { useApplications } from "~/features/applications/hooks/useApplications";
@@ -73,21 +71,22 @@ const ApproveButton = ({ isLoading = false }: IApproveButtonProps): JSX.Element 
 
 export const ApplicationItem = ({
   id,
+  name_,
   recipient,
-  name,
   metadataPtr,
   time,
   isApproved = false,
   isLoading = false,
+  ...props
 }: IApplicationItemProps): JSX.Element => {
   const metadata = useMetadata<Application>(metadataPtr);
 
   const form = useFormContext();
 
-  const { bio, fundingSources = [], impactMetrics = [] } = metadata.data ?? {};
+  const { name, contributionDescription } = metadata.data ?? {};
 
   return (
-    <div className="flex items-center gap-2 rounded border-b dark:border-gray-800 hover:dark:bg-gray-800">
+    <div className="flex items-center gap-2 rounded dark:border-gray-800 hover:dark:bg-[#5b5a66]">
       <label className="flex flex-1 cursor-pointer items-center gap-4 p-2">
         <Checkbox disabled={isApproved} value={id} {...form.register(`selected`)} type="checkbox" />
 
@@ -101,17 +100,13 @@ export const ApplicationItem = ({
           </div>
 
           <div>
-            <div className="flex gap-4 text-xs dark:text-gray-400">
-              <div>{fundingSources.length} funding sources</div>
+            <div className="flex gap-4 text-xs dark:text-[#222133]">{name}</div>
 
-              <div>{impactMetrics.length} impact metrics</div>
-            </div>
-
-            <div className="line-clamp-2 text-sm dark:text-gray-300">{bio}</div>
+            <div className="line-clamp-2 text-sm dark:text-[#222133]">{contributionDescription}</div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-gray-400">
+        <div className="flex items-center gap-2 text-xs text-[#222133] dark:text-[#222133]">
           <ClockIcon className="size-3" />
 
           <Skeleton className="mb-1 min-h-5 min-w-24" isLoading={isLoading}>
@@ -167,15 +162,15 @@ export const ApplicationsToApprove = (): JSX.Element => {
         approve.mutate(values.selected);
       }}
     >
-      <Markdown>{`### Review applications
-Select the applications you want to approve. You must be a configured admin to approve applications.
+      <h1 className="mt-3 text-4xl text-[#222133]">Review applications</h1>
 
-`}</Markdown>
-
-      <Alert>Newly submitted applications can take 10 minutes to show up.</Alert>
+      <div className="mt-3 text-lg text-[#222133]">
+        Select the applications you want to approve. You must be a configured admin to approve applications.
+        <div className="mt-2 text-sm text-[#5b5a66]">Newly submitted applications can take 10 minutes to show up.</div>
+      </div>
 
       <div className="my-2 flex items-center justify-between">
-        <div className="text-gray-300">
+        <div className="text-[#222133]">
           {applications.data?.length ? `${applications.data.length} applications found` : ""}
         </div>
 
