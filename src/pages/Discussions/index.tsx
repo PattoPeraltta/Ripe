@@ -14,20 +14,6 @@ const Discussions = (): JSX.Element => (
         </a>
 
         <a
-          className="flex h-[200px] w-full items-center justify-center rounded-lg border-4 border-[#222133] bg-[#B6CDEC] p-6 hover:bg-[#222133]"
-          href="/Discussions/Proposals"
-        >
-          <div className="text-2xl font-bold text-[#222133] hover:text-[#B6CDEC]">New President</div>
-        </a>
-
-        <a
-          className="flex h-[200px] w-full items-center justify-center rounded-lg border-4 border-[#222133] bg-[#B6CDEC] p-6 hover:bg-[#222133]"
-          href="/Discussions/Proposals"
-        >
-          <div className="text-2xl font-bold text-[#222133] hover:text-[#B6CDEC]">Defining next meet-up</div>
-        </a>
-
-        <a
           className="flex h-[200px] w-full items-center justify-center rounded-lg border-4 border-[#222133] bg-[#222133] p-6"
           href="/Discussions/applications/new"
         >
