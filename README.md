@@ -59,13 +59,13 @@ graph LR
 ## Team
 
 <p align="center">
-    <a href="readme/santi.png">
+    <a href="/readme/santi.png">
         <img src="https://x.com/santi_nihany" alt="Alt Text 2" width="100" height="100">
     </a>
      <a href="https://x.com/luzalbaposse">
         <img src="/readme/luz.png" alt="Alt Text 1" width="100" height="100">
     </a>
-    <a href="readme/pato.png">
+    <a href="/readme/pato.png">
         <img src="https://x.com/PatojPeralta" alt="Alt Text 3" width="100" height="100">
     </a>
 </p>
