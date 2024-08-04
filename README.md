@@ -59,10 +59,10 @@ graph LR
 
 <p align="center">
     <a href="https://x.com/santi_nihany">
-        <img src="/readme/santi.png" alt="Alt Text 2" width="100" height="100">
+        <img src="/readme/santi.png" alt="Alt Text 2" width="100" height="100" style="margin-right: 10px;>
     </a>
      <a href="https://x.com/luzalbaposse">
-        <img src="/readme/luz.png" alt="Alt Text 1" width="100" height="100">
+        <img src="/readme/luz.png" alt="Alt Text 1" width="100" height="100" style="margin-right: 10px;>
     </a>
     <a href="https://x.com/PatojPeralta">
         <img src="/readme/pato.png" alt="Alt Text 3" width="100" height="100">
