@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 
 import { Component as ConnectButton } from "~/components/ConnectButton";
 import { Alert } from "~/components/ui/Alert";
-import { Heading } from "~/components/ui/Heading";
 import { config } from "~/config";
 import { useMaci } from "~/contexts/Maci";
 import { useProjectCount, useProjectsResults, useResults } from "~/hooks/useResults";
@@ -100,9 +99,7 @@ const StatsPage = (): JSX.Element => {
 
   return (
     <Layout>
-      <Heading as="h1" size="3xl">
-        Stats
-      </Heading>
+      <h1 className="mb-10 text-center text-3xl text-[#222133]">It is time to reveal the result!</h1>
 
       {appState === EAppState.RESULTS ? (
         <Stats />

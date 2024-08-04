@@ -12,7 +12,7 @@ export const VotersList = (): JSX.Element => {
     return <EmptyState title="No voters">Add voters to allow them to vote</EmptyState>;
   }
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 text-[#222133]">
       {(
         data ??
         Array(5)

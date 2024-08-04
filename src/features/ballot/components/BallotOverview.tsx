@@ -183,6 +183,10 @@ const BallotOverview = () => {
   if (appState !== EAppState.VOTING) {
     return (
       <div className="flex flex-col items-start gap-2 pt-8 ">
+        <a className="mb-8 text-2xl font-bold text-[#222133]" href="/Discussions">
+          {"<"} Go back
+        </a>
+
         <BallotHeader>Voting has not started yet</BallotHeader>
 
         {appState === EAppState.REVIEWING ? (
