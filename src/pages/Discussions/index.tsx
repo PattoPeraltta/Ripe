@@ -3,6 +3,10 @@ import { LayoutWithBallot } from "~/layouts/DefaultLayout";
 const Discussions = (): JSX.Element => (
   <div className="">
     <LayoutWithBallot eligibilityCheck showBallot sidebarComponent={null}>
+      <a className="mb-8 text-2xl font-bold text-[#222133]" href="/">
+        {"<"} Go back
+      </a>
+
       <div className="mb-8 text-5xl font-bold text-[#222133]">Your Discussions</div>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">

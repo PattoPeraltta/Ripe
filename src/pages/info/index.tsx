@@ -31,21 +31,23 @@ const InfoPage = (): JSX.Element => {
 
   return (
     <Layout>
-      <div className="hidden h-4 w-4/5 overflow-hidden rounded-full border md:block">
-        <div className="h-full bg-white transition-all" style={{ width: `${progress * 100}%` }} />
+      <div className="hidden h-4 w-4/5 overflow-hidden rounded-full border border-[#222133] md:block">
+        <div className="h-full bg-[#222133] transition-all" style={{ width: `${progress * 100}%` }} />
       </div>
 
       <div className="px-2 md:flex">
         {steps.map((step, i) => (
           <div
             key={step.label}
-            className={cn("border-b border-l p-4 transition-opacity md:w-1/5", {
+            className={cn("border-b border-l border-[#222133] p-4 transition-opacity md:w-1/5", {
               "opacity-50": currentStepIndex <= i,
             })}
           >
-            <h3 className="font-semibold">{step.label}</h3>
+            <h3 className="font-semibold text-[#222133]">{step.label}</h3>
 
-            {step.date instanceof Date && !Number.isNaN(step.date) && <div>{formatDate(step.date)}</div>}
+            {step.date instanceof Date && !Number.isNaN(step.date) && (
+              <div className="text-[#222133]">{formatDate(step.date)}</div>
+            )}
           </div>
         ))}
       </div>
