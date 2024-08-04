@@ -85,6 +85,26 @@ Ripe brings innovation to the table with its email domain verification feature, 
 
 This feature not only adds an additional layer of security but also introduces a novel way of integrating MACI with existing organizational structures -traditional ones-. By using email verification as a gatekeeping mechanism, Ripe enhances the trustworthiness and relevance of the voting process, ensuring that the right stakeholders are involved in decision-making. This approach can be extended to serve as a broader gatekeeping tool in the protocol, controlling access to sensitive voting and governance decisions based on institutional affiliation or other criteria.
 
+## Contranct Addresses Deployed on Scroll Sepolia
+- ConstantInitialVoiceCreditProxy: 0xC413538578345f60Db652Cd386622Bc80bDb929B
+- EASGatekeeper: 0x858666eB9c78F8846Cab53e784867D9087f001ca
+- Verifier: 0x6632586B141265CE7dd56e652a420B4288Da9aC3
+- TopupCredit: 0x91a9CAC596B52e7AfA86087cdB195C0e3A01d8bb
+- PoseidonT3: 0xC03E6A9d17cA60244Ae2bE08De3F8d6FcafdE04E
+- PoseidonT4: 0xd955d2437337134224Bc4EbC9016EBb8D5995156
+- PoseidonT5: 0x790bfA011aB2eD3dF96B8f6177D65fEA4C1D8F25
+- PoseidonT6: 0x5EC80820A774280Bdf21f471D373FC89C9A88C78
+- PollFactory: 0x1D6a5597303fff2B50300521dcc87ab347fcA0AF
+- MessageProcessorFactory: 0x402767Ba2C09729EE2b512ec114eE925cDc7DE71
+- TallyFactory: 0x4a77BC9C502920588cFD94f56a643732700907F4
+- MACI: 0xf64B3fB7619f7855A4457c3bfbEEf663cA50aa7f
+- AccQueueQuinaryBlankSl: 0x0fa43A0Cb85698F8D7Da5A784CF67FcD054E0B1F
+- VkRegistry: 0xDcc99dc6E24E6A1Bf4D3BFb8cfa189A83B54D65f
+- Poll-poll-0: 0xb7C0748cc64E59C3cdB2dDd2E046D04E17c49A36
+- MessageProcessor-poll-0: 0x89CB9Cfe54BE6bC423F219898014E98F11BFEc2d
+- Tally-poll-0: 0x961C767eF2032F156A54185400193360C78E5DeF
+- AccQueueQuinaryMaci-poll-0: 0x68d0C93a7b78bBd1CDc66bF4896Ac98780Bbe14f
+  
 ## Credits 
 
 We used MACI-RPGF as a starting point for our project.
