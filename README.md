@@ -26,6 +26,8 @@ Although we didn’t fully implement all features in this release, we have a cle
 
 - **Attestation:** After successful domain verification, the coordinator issues an attestation to the user, enabling them to vote. 
 
+You can see the implementation of this at [Santi's Branch] (https://github.com/PattoPeraltta/Ripe/tree/santi)
+
 After all, time is limited!
 
 ## Key Features
